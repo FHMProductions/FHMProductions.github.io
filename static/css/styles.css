@@ -1,11 +1,11 @@
 @font-face {
     font-family: 'edo';
-    src: local('edo'), url('/static/fonts/edo.woff') format('woff');
+    src: local('edo'), url('static/fonts/edo.woff') format('woff');
 }
 
 @font-face {
     font-family: 'shantell-regular';
-    src: url('/static/fonts/ShantellSans-Regular.woff') format('truetype');
+    src: url('static/fonts/ShantellSans-Regular.woff') format('truetype');
 }
 
 /* ====================================
@@ -44,6 +44,18 @@ main {
     }
 }
 
+.image-scaling-container {
+    overflow: hidden;    /* Hide the parts of the image that don't fit */
+    position: relative;  /* In case you want to use more positioning later */
+}
+
+.image-scaling-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;   /* This is the key property that crops the image appropriately */
+    object-position: center;
+    display: block;      /* Remove potential unwanted spacing around images */
+}
 
 
 /* ====================================
@@ -197,10 +209,13 @@ main {
     display: block !important; /* Ensure the image is displayed */
 }
 
+.carousel-item .image-scaling-container {
+    display: inline-block;
+    width: 22vw;
+    height: 32vw;
+}
+
 .carousel-item img {
-    width: 95%; /* Set the width of the images */
-    height: auto; /* Set the height of the images */
-    object-fit: cover; /* Ensure that the images cover their entire container */
     border-radius: 10px; /* Add rounded corners to the images */
     border: 2px solid white; /* Add a border around the images */
 }
@@ -231,9 +246,10 @@ main {
         width: 100%; /* Adjust as needed */
     }
 
-    .carousel-item img {
-        width: 92%; /* Adjust as needed */
-        height: auto; /* Maintain the image's aspect ratio */
+    .carousel-item .image-scaling-container {
+        display: inline-block;
+        width: 70vw;
+        height: 105vw;
     }
 
     .carousel-control-prev,
@@ -268,12 +284,20 @@ main {
 .video-container-detail {
     width: 100%;
     margin-top: 10px;
-    border: 2px solid #fff; /* Add a border around the video */
-    border-radius: 10px; /* Add rounded corners to the video */
 }
 
-.video-container-detail video{
+.video-container-detail video {
+    height: 70vh;
     width: 100%;
+    border: 2px solid #fff; 
+    border-radius: 10px;
+}
+
+.video-container-detail img {
+    width: 100%;
+    aspect-ratio: 1/1;
+    border: 2px solid #fff; 
+    border-radius: 10px;
 }
 
 @media (max-width: 600px) {
@@ -480,8 +504,12 @@ main {
 
 .team-member img {
     border: 2px solid white;
-    width: 20vw; /* Make the image fill 80% of the screen width */
-    height: auto; /* Maintain the image's aspect ratio */
+}
+
+.team-member .image-scaling-container {
+    display: inline-block;
+    width: 20vw;
+    height: 32vw;
 }
 
 .name, .role, .description-list, .credits-list, .websites-list, .credits, .copyright, .description, p{
@@ -542,13 +570,13 @@ main {
         text-align: center;
         width: 100% !important; /* On small screens, make each team member take up the full width */
         margin-top: 20px; /* Add some space between the team members */
-
     }
 
-    .team-member img {
-        width: 50vw !important; /* Use viewport width units to make the width responsive */
-        height: auto; /* Maintain the image's aspect ratio */
-        margin: 0 auto; /* Center the team members */
+    /* Larger images container on mobile */
+    .team-member .image-scaling-container {
+        display: inline-block;
+        width: 50vw;
+        height: 80vw;
     }
 
     .team-member .name {
@@ -701,11 +729,15 @@ main {
 }
 
 .talent-section img {
-    width: 100%; /* Set the width of the images */
-    height: auto; /* Set the height of the images */
+    overflow: hidden;
     border: 2px solid white; /* Add a red border around the images */
     border-radius: 10px; /* Add rounded corners to the images */
 }
+
+/* .talent-section a {
+    width: auto; 
+    height: 100%; 
+} */
 
 .talent-section .name {
     display: flex;
@@ -731,6 +763,17 @@ main {
     flex-direction: column;
     align-items: center;
     text-decoration: none !important; /* Remove the underline from the link */
+}
+
+.talent-main-img-container {
+    object-fit: cover;
+    object-position: center;
+}
+
+.talent-main-img-container .image-scaling-container {
+    display: inline-block;
+    width: 23vw;
+    height: 37vw;
 }
 
 #pagination-container {
@@ -774,8 +817,15 @@ main {
     object-fit: cover; /* Ensure that the entire image is visible within its container */
 }
 
-@media (max-width: 600px) {
+@media (max-width: 1000px) {
+    .talent-main-img-container .image-scaling-container {
+        display: inline-block;
+        width: 44vw;
+        height: 75vw;
+    }
+}
 
+@media (max-width: 600px) {
     .talent-page .title {
         margin-bottom: 5px;
     }
@@ -788,11 +838,6 @@ main {
 
     .talent-section row {
         width: 100%; /* Adjust as needed */
-    }
-
-    .talent-section img {
-        width: 100%; /* Adjust as needed */
-        height: auto; /* Maintain the image's aspect ratio */
     }
 
     .talent-section .name {
